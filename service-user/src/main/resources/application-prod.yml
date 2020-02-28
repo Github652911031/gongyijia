@@ -1,0 +1,87 @@
+spring:
+  cloud:
+    consul:
+      host: ${hostname.consul}
+      port: 8500
+      discovery:
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}
+        prefer-ip-address: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 50
+    min-idle: 50
+    max-active: 200
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: SELECT 'x'
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true
+    max-pool-prepared-statement-per-connection-size: 20
+    filters:
+      - stat
+      - log4j
+    connection-properties:
+      - druid.stat.mergeSql=true
+      - druid.stat.slowSqlMillis=5000
+    url: jdbc:mysql://${hostname.mysql}:3306/user?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
+    username: root
+    password: NewPassword123!
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: ${hostname.redis}
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1
+    timeout: 5000
+  zipkin:
+    base-url: http://${hostname.zipkin}:9411
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0
+
+  thrift:
+    server:
+      port: 25000
+      service-id: thrift-service-user-server
+      service-model: threadedSelector
+      worker-queue-capacity: 100
+      threaded-selector:
+        accept-queue-size-per-thread: 500
+        selector-threads: 3
+        max-worker-threads: 1000
+        min-worker-threads: 10
+      discovery:
+        host: ${hostname.consul}
+        port: 8500
+        enabled: true
+        tags: threadSelector
+        health-check:
+          enabled: true
+          check-interval: 10
+          check-timeout: 3
+
+
+swagger:
+  enabled: true
+
+
+jwt:
+  expirationLong: 7200000
+
+hostname:
+  mysql: 10.112.1.79
+  redis: 10.30.132.11
+  consul: consul
+  zipkin: 10.30.132.11
+

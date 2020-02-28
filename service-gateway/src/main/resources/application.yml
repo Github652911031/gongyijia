@@ -1,0 +1,40 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: service-zuul
+  cloud:
+      consul:
+        discovery:
+          service-name: service-zuul
+
+
+
+server:
+  port: 8764
+
+
+logging:
+  config: classpath:logback.xml
+
+url:
+  whiteList:
+    - /service-user/user/accountRegister
+    - /service-user/user/accountLogin
+
+
+
+zuul:
+  semaphore:
+    max-semaphores: 5000
+
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 60000
+        loggerLevel: full
+

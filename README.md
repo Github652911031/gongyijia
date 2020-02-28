@@ -7,7 +7,7 @@ service-user是用户模块，负责处理用户部分的逻辑。
 ### 项目启动过程  
 1.在IDEA中直接打开项目，选择用Maven导入  
 2.在IDEA右侧选项卡中的Maven Project，展开gongyijia选项，展开Lifecycle选项，双击install完成整体项目的构建。  
-    ![image](https://github.com/Github652911031/gongyijia/blob/master/image/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200227230557.png)  
+见image文件夹下1.png
 3.展开service-common选项，和2一样，双击install完成common的构建。
 4.启动Consul注册中心。（Consul需要另外下载，可自行百度启动命令）
 5.更改gateway和user模块下的配置文件application-dev.yml和application-prod.yml(具体运行的时候使用哪个配置  
@@ -43,5 +43,15 @@ expire:过期时间
 创建相应的表结构，但是在application-dev.yml中定义了spring.jpa.hibernate.ddl-auto为create，  
 因此每次启动工程的时候都会把原来的表删除并重新创建表，同时导入import.sql文件中的数据。如果不需要每次  
 都将数据清空，可以改为update  
-数据库设计如下：
-![image]()
+数据库设计见image文件夹2.png
+
+ 
+* 用户表  
+ 用户表仅仅保存用户名（也就是手机号）和密码，用户表里的用户有四种角色:普通用户、社工、志愿者、超级用户。
+ 普通用户通过申请可以成为志愿者，通过认证可以成为社工。
+* 社工信息表  
+ 用于存储社工的具体信息，通过id和用户表进行关联
+* 志愿者表
+ 用于存储志愿者的具体信息，通过id和用户表进行关联
+* 社区信息表
+ 存储社区的信息

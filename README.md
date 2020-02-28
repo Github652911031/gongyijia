@@ -7,7 +7,7 @@ service-user是用户模块，负责处理用户部分的逻辑。
 ### 项目启动过程  
 1.在IDEA中直接打开项目，选择用Maven导入  
 2.在IDEA右侧选项卡中的Maven Project，展开gongyijia选项，展开Lifecycle选项，双击install完成整体项目的构建。  
-    ![image](https://github.com/Github652911031/gongyijia/blob/master/image/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200227230557.png)
+    ![image](https://github.com/Github652911031/gongyijia/blob/master/image/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200227230557.png)  
 3.展开service-common选项，和2一样，双击install完成common的构建。
 4.启动Consul注册中心。（Consul需要另外下载，可自行百度启动命令）
 5.更改gateway和user模块下的配置文件application-dev.yml和application-prod.yml(具体运行的时候使用哪个配置  

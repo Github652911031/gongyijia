@@ -54,6 +54,7 @@ public class UserController extends BaseController{
     @PostMapping("/volunteerRegister")
     public ResultData<String> volunteerRegister(@Validated @RequestBody VolunteerRegisterReq volunteerRegisterReq){
         //todo:实现
+        userService.volunteerRegister(volunteerRegisterReq);
         return this.buildResultData();
     }
 

@@ -1,7 +1,10 @@
 package com.zy.user.reposity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "volunteer_GY")
 public class Volunteer_GY {
@@ -18,4 +21,19 @@ public class Volunteer_GY {
      * 下面是一些基本信息
      *  包括身份证号码，姓名，性别，出生日期，居住地
      */
+
+    @Column
+    private String identificationNum;
+
+    @Column
+    private String name;
+
+    @Column
+    private String sex;
+
+    @Column
+    private String birthDate;
+
+    @Column
+    private String address;
 }

@@ -3,12 +3,15 @@ package com.zy.user.service;
 import com.zy.base.domain.enums.BusinessCenterExceptionEnum;
 import com.zy.base.exception.BusinessCenterException;
 import com.zy.base.req.user.AccountReq;
+import com.zy.base.req.user.VolunteerRegisterReq;
 import com.zy.user.dao.AccountDao;
 import com.zy.base.domain.enums.TypeEnum;
 import com.zy.user.dao.AccountRoleDao;
+import com.zy.user.dao.VolunteerDao;
 import com.zy.user.enums.RoleEnums;
 import com.zy.user.reposity.AccountRole_GY;
 import com.zy.user.reposity.Account_GY;
+import com.zy.user.reposity.Volunteer_GY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,9 @@ public class UserService {
     @Autowired
     AccountRoleDao accountRoleDao;
 
+    @Autowired
+    VolunteerDao volunteerDao;
+
     @Transactional
     public void accountRegister(AccountReq accountReq) {
         Account_GY account_gy = new Account_GY();
@@ -37,6 +43,28 @@ public class UserService {
         accountRole_gy.setAccountId(account_gy.getId());
         accountRole_gy.setRoleId(RoleEnums.ORDINARY.getCode());
         accountRoleDao.save(accountRole_gy);
+    }
+
+    @Transactional
+    public void volunteerRegister(VolunteerRegisterReq volunteerRegisterReq) {
+        Account_GY account_gy = new Account_GY();
+        account_gy.setAccountName(volunteerRegisterReq.getAccountName());
+        account_gy.setPwd(volunteerRegisterReq.getPassword());
+        accountDao.save(account_gy);
+        //在用户角色对应表中插入信息
+        AccountRole_GY accountRole_gy = new AccountRole_GY();
+        accountRole_gy.setAccountId(account_gy.getId());
+        accountRole_gy.setRoleId(RoleEnums.VOLUNTEER.getCode());
+        accountRoleDao.save(accountRole_gy);
+        //在志愿者信息表中插入信息
+        Volunteer_GY volunteer_gy = new Volunteer_GY();
+        volunteer_gy.setAccountId(account_gy.getId());
+        volunteer_gy.setIdentificationNum(volunteerRegisterReq.getIdentificationNum());
+        volunteer_gy.setName(volunteerRegisterReq.getName());
+        volunteer_gy.setSex(volunteerRegisterReq.getSex());
+        volunteer_gy.setBirthDate(volunteerRegisterReq.getBirthDate());
+        volunteer_gy.setAddress(volunteerRegisterReq.getAddress());
+        volunteerDao.save(volunteer_gy);
     }
 
     public String accountLogin(AccountReq accountReq) {
